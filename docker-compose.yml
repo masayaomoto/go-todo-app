@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./docker/frontend/Dockerfile
+    container_name: frontend_container
+    ports:
+      - "5173:5173"
+    tty: true
+    volumes:
+      - ./frontend:/app/frontend
+    command: sh -c "cd /app/frontend && yarn install && yarn start"
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+    container_name: backend_container
+    ports:
+      - "8080:8080"
+    tty: true
+    volumes:
+      - ./backend:/app/backend
+    command: sh -c "cd /app/backend && go run server.go"
